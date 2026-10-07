@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Доска Питера Паркера — портфолио</title>
+  <meta name="description" content="Портфолио Питера Паркера в виде пробковой доски: пропуск, тетрадь, карта патруля, папки с делами и блокнот для сообщений. Учебная работа по курсу «Web-дизайн».">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Dela+Gothic+One&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <!-- Фильтр «дрожащая рука»: делает линии рисунка неровными, как от карандаша -->
+  <svg class="defs" aria-hidden="true">
+    <filter id="wobble">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/>
+      <feDisplacementMap in="SourceGraphic" scale="5"/>
+    </filter>
+  </svg>
+
+  <!-- Паук на нити: опускается по мере прокрутки -->
+  <div class="thread" aria-hidden="true">
+    <svg class="thread__spider" viewBox="0 0 40 40">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M16 16 L6 8 M15 20 L3 18 M15 24 L4 28 M17 27 L9 37"/>
+        <path d="M24 16 L34 8 M25 20 L37 18 M25 24 L36 28 M23 27 L31 37"/>
+      </g>
+      <ellipse cx="20" cy="16" rx="5" ry="5" fill="currentColor"/>
+      <ellipse cx="20" cy="26" rx="7" ry="8" fill="currentColor"/>
+    </svg>
+    <img class="pic thread__figure" src="images/hanging.png" alt="">
+  </div>
+
+  <header class="header">
+    <div class="board header__inner">
+      <a class="logo tape" href="#top">П. Паркер · доска</a>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="nav">Меню</button>
+
+      <nav class="nav" id="nav" aria-label="Разделы страницы">
+        <a class="nav__link" href="#about">Тетрадь</a>
+        <a class="nav__link" href="#education">Учёба</a>
+        <a class="nav__link" href="#work">Работа</a>
+        <a class="nav__link" href="#map">Карта</a>
+        <a class="nav__link" href="#villains">Дела</a>
+        <a class="nav__link" href="#gear">Разработки</a>
+        <a class="nav__link" href="#signal">Написать</a>
+        <button class="lamp" id="themeToggle" type="button" aria-pressed="false">Выключить свет</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="desk">
+    <!-- ===== Первый экран: обложка комикса, пропуск, снимки ===== -->
+    <section class="hero board" id="top">
+      <div class="cover">
+        <p class="cover__issue">Выпуск №1 · Куинс, Нью-Йорк</p>
+        <h1 class="cover__title">Дружелюбный <span>сосед</span></h1>
+        <p class="cover__burst">Портфолио</p>
+      </div>
+
+      <div class="pass">
+        <span class="pass__clip" aria-hidden="true"></span>
+        <p class="pass__head">Пресса · Daily Bugle</p>
+        <div class="pass__body">
+          <div class="pass__photo">
+            <span aria-hidden="true">фото<br>3×4</span>
+            <img class="pic" src="images/mask.jpg" alt="Фото на пропуске: Человек-паук в маске, по плечи">
+          </div>
+          <div>
+            <p class="pass__name">Питер Паркер</p>
+            <p class="pass__role">фотограф-фрилансер<br>студент-биофизик</p>
+            <p class="pass__id">№ 0616 · действует всегда</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="shots">
+        <figure class="polaroid" style="--r: -5deg">
+          <svg viewBox="0 0 100 86" aria-hidden="true">
+            <rect width="100" height="86" fill="#f2a65a"/>
+            <rect width="100" height="40" fill="#e9714b" opacity=".55"/>
+            <circle cx="70" cy="44" r="13" fill="#fbe3a3"/>
+            <path d="M0 86 V52 H9 V38 H18 V58 H24 V30 H34 V60 H40 V46 H49 V22 H52 V14 H54 V22 H58 V56 H66 V42 H76 V62 H82 V34 H91 V54 H100 V86 Z" fill="#2b2233"/>
+          </svg>
+          <figcaption>крыша, 5:40</figcaption>
+        </figure>
+        <figure class="polaroid" style="--r: 4deg">
+          <svg viewBox="0 0 100 86" aria-hidden="true">
+            <rect width="100" height="86" fill="#9fc3d9"/>
+            <rect y="66" width="100" height="20" fill="#49708a"/>
+            <path d="M0 58 H100" stroke="#3a3038" stroke-width="3"/>
+            <path d="M28 66 V20 M72 66 V20" stroke="#3a3038" stroke-width="6"/>
+            <path d="M0 50 Q14 46 28 22 Q50 70 72 22 Q86 46 100 50" fill="none" stroke="#3a3038" stroke-width="1.5"/>
+            <path d="M36 58 V40 M44 58 V50 M56 58 V50 M64 58 V40 M14 58 V46 M86 58 V46" stroke="#3a3038" stroke-width="1"/>
+          </svg>
+          <figcaption>мост. опоздал на пару</figcaption>
+        </figure>
+      </div>
+
+      <p class="sticky hero__sticky" style="--r: 3deg">С великой силой приходит великая ответственность.<span>— дядя Бен</span></p>
+
+      <div class="hero__actions">
+        <a class="sticker" href="#signal">Сообщить о происшествии</a>
+        <a class="sticker sticker--plain" href="#map">Открыть карту</a>
+      </div>
+
+      <p class="label hero__now">Паук сейчас патрулирует: <b id="heroPlace">Куинс</b></p>
+    </section>
+
+    <!-- ===== Вырезка из комикса ===== -->
+    <div class="board">
+      <figure class="comic-strip">
+        <img class="pic" src="images/comic-eyes.jpg" alt="Кадр из комикса: Человек-паук выглядывает из-за края">
+        <figcaption>он всё видит. особенно тех, кто не долистал до конца</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===== Тетрадь: обо мне и навыки ===== -->
+    <section class="board reveal" id="about">
+      <h2 class="heading"><span class="tape">Обо мне</span></h2>
+
+      <div class="notebook">
+        <div class="notebook__text">
+          <p class="hand hand--big">Кто я такой</p>
+          <p>Вырос в&nbsp;Куинсе у&nbsp;тёти Мэй и&nbsp;дяди Бена. С&nbsp;детства разбирал технику и&nbsp;собирал обратно так, чтобы работала лучше.</p>
+          <p>После одной школьной экскурсии в&nbsp;лабораторию жизнь стала заметно насыщеннее. Днём снимаю для газеты и&nbsp;учусь, ночью присматриваю за&nbsp;городом.</p>
+
+          <ul class="checks">
+            <li>репортажная фотография</li>
+            <li>химия и биофизика</li>
+            <li>инженерия, пайка, шитьё</li>
+            <li class="checks__no">пунктуальность <i>(работаю над этим)</i></li>
+          </ul>
+        </div>
+
+        <div class="sketch">
+          <div class="sketch__figure">
+            <svg viewBox="0 0 300 300" aria-hidden="true">
+              <g filter="url(#wobble)" fill="none" stroke="#2c2a33" stroke-linecap="round" stroke-linejoin="round">
+                <g stroke-width="4">
+                  <path d="M135 112 L95 80 L62 38"/>
+                  <path d="M130 120 L80 110 L38 88"/>
+                  <path d="M130 130 L80 148 L38 178"/>
+                  <path d="M136 138 L98 178 L72 238"/>
+                  <path d="M165 112 L205 80 L238 38"/>
+                  <path d="M170 120 L220 110 L262 88"/>
+                  <path d="M170 130 L220 148 L262 178"/>
+                  <path d="M164 138 L202 178 L228 238"/>
+                </g>
+                <ellipse cx="150" cy="122" rx="22" ry="24" stroke-width="3" fill="#2c2a33" fill-opacity=".8"/>
+                <ellipse cx="150" cy="184" rx="34" ry="44" stroke-width="3" fill="#2c2a33" fill-opacity=".65"/>
+                <path d="M128 160 l44 40 M124 178 l44 40 M136 148 l40 36" stroke-width="1.2" stroke="#f4f1e6"/>
+              </g>
+            </svg>
+            <button class="mark" type="button" data-skill="sense" style="--x: 50%; --y: 38%">1<span class="visually-hidden">: паучье чутьё</span></button>
+            <button class="mark" type="button" data-skill="grip" style="--x: 21%; --y: 13%">2<span class="visually-hidden">: цепкость</span></button>
+            <button class="mark" type="button" data-skill="strength" style="--x: 74%; --y: 49%">3<span class="visually-hidden">: сила</span></button>
+            <button class="mark" type="button" data-skill="web" style="--x: 50%; --y: 76%">4<span class="visually-hidden">: паутина</span></button>
+          </div>
+
+          <p class="label sketch__hint">нажмите на цифру в кружке</p>
+
+          <div class="sketch__note" aria-live="polite">
+            <p class="hand hand--big" id="skillTitle"></p>
+            <p class="hand" id="skillText"></p>
+            <p class="scribble"><span class="scribble__fill" id="skillMeter"></span></p>
+            <p class="label" id="skillLevel"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Образование ===== -->
+    <section class="board reveal" id="education">
+      <h2 class="heading"><span class="tape">Образование</span></h2>
+
+      <div class="papers">
+        <article class="student" style="--r: -1.5deg">
+          <p class="student__head">Университет Эмпайр-Стейт</p>
+          <div class="student__body">
+            <p class="label">студенческий билет № 1962</p>
+            <h3>Питер Паркер</h3>
+            <p>Факультет естественных наук, направление «Биофизика». Учусь сейчас.</p>
+            <p>Курсовые по свойствам белковых волокон и&nbsp;материаловедению. Параллельно работаю лаборантом на&nbsp;кафедре.</p>
+            <button class="goto" type="button" data-goto="manhattan">на карте: Манхэттен</button>
+          </div>
+        </article>
+
+        <article class="diploma" style="--r: 1.2deg">
+          <p class="label">аттестат</p>
+          <h3>Мидтаунская школа науки и&nbsp;технологий</h3>
+          <p>Среднее образование. Окончил с&nbsp;отличием.</p>
+          <p>Победитель научных ярмарок, участник команды академического десятиборья.</p>
+          <span class="diploma__seal" aria-hidden="true">отл.</span>
+          <button class="goto" type="button" data-goto="queens">на карте: Куинс</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Опыт работы ===== -->
+    <section class="board reveal" id="work">
+      <h2 class="heading"><span class="tape">Опыт работы</span></h2>
+
+      <ol class="jobs">
+        <li class="job" style="--r: -1deg">
+          <p class="job__when">сейчас</p>
+          <h3>Фотограф-фрилансер</h3>
+          <p class="job__where">газета «Дейли Бьюгл»</p>
+          <p>Репортажная съёмка городских происшествий. Приношу кадры раньше всех и&nbsp;спокойно переношу громкие правки главного редактора.</p>
+        </li>
+        <li class="job" style="--r: 1.4deg">
+          <p class="job__when">параллельно с&nbsp;учёбой</p>
+          <h3>Лаборант-исследователь</h3>
+          <p class="job__where">лаборатория биофизики, Эмпайр-Стейт</p>
+          <p>Подготовка образцов, расчёты прочности полимерных волокон, журнал экспериментов.</p>
+        </li>
+        <li class="job" style="--r: -0.6deg">
+          <p class="job__when">по ночам</p>
+          <h3>Дружелюбный сосед</h3>
+          <p class="job__where">Нью-Йорк, без зарплаты</p>
+          <p>Патрулирование районов, помощь жителям, возвращение велосипедов владельцам.</p>
+        </li>
+        <li class="job" style="--r: 1deg">
+          <p class="job__when">школьные годы</p>
+          <h3>Доставщик пиццы</h3>
+          <p class="job__where">пиццерия в&nbsp;Куинсе</p>
+          <p>Научился планировать маршрут и&nbsp;понял, что дороги не&nbsp;всегда самый быстрый путь.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===== Карта: опыт, образование, проекты по районам ===== -->
+    <section class="board reveal" id="map">
+      <h2 class="heading"><span class="tape">Карта патруля</span></h2>
+
+      <div class="patrol">
+        <div class="paper-map">
+          <span class="pin pin--tl" aria-hidden="true"></span>
+          <span class="pin pin--tr" aria-hidden="true"></span>
+
+          <svg class="paper-map__svg" viewBox="0 0 400 430" role="group" aria-label="Карта районов Нью-Йорка">
+            <defs>
+              <pattern id="streets" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+                <path d="M0 0 H12 M0 0 V12" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1"/>
+              </pattern>
+              <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-40)">
+                <path d="M0 0 V7" stroke="#c4161c" stroke-width="2.4"/>
+              </pattern>
+            </defs>
+
+            <rect width="400" height="430" fill="#27a3dc"/>
+            <path d="M0 0 H104 L116 96 L96 214 L70 286 L0 300 Z" fill="#d9d2c2" stroke="#1d2f6f" stroke-width="2"/>
+
+            <g id="districts">
+              <path class="district" data-district="bronx" style="--fill: #f0a05c" d="M196 16 L262 12 L334 26 L356 72 L350 110 L300 124 L252 130 L214 108 L198 92 Z"/>
+              <path class="district" data-district="manhattan" style="--fill: #a99bdc" d="M166 38 L192 44 L188 96 L178 152 L164 204 L150 240 L130 250 L120 232 L130 184 L146 138 L156 84 Z"/>
+              <path class="district" data-district="queens" style="--fill: #5aaae0" d="M214 150 L262 144 L318 132 L362 136 L384 196 L388 252 L352 286 L330 300 L286 284 L256 270 L240 236 L232 212 L206 200 Z"/>
+              <path class="district" data-district="brooklyn" style="--fill: #cfc7b6" d="M168 242 L204 216 L232 226 L244 262 L252 282 L300 300 L326 312 L312 356 L290 386 L250 398 L214 396 L184 364 L164 330 Z"/>
+              <path class="district" data-district="staten" style="--fill: #ee93b5" d="M38 332 L72 312 L106 302 L126 326 L132 348 L112 388 L94 410 L56 412 L34 398 Z"/>
+            </g>
+
+            <g pointer-events="none">
+              <path d="M196 16 L262 12 L334 26 L356 72 L350 110 L300 124 L252 130 L214 108 L198 92 Z M166 38 L192 44 L188 96 L178 152 L164 204 L150 240 L130 250 L120 232 L130 184 L146 138 L156 84 Z M214 150 L262 144 L318 132 L362 136 L384 196 L388 252 L352 286 L330 300 L286 284 L256 270 L240 236 L232 212 L206 200 Z M168 242 L204 216 L232 226 L244 262 L252 282 L300 300 L326 312 L312 356 L290 386 L250 398 L214 396 L184 364 L164 330 Z M38 332 L72 312 L106 302 L126 326 L132 348 L112 388 L94 410 L56 412 L34 398 Z" fill="url(#streets)"/>
+
+              <!-- парки -->
+              <path d="M163 96 L174 98 L166 150 L155 148 Z" fill="#3fa665"/>
+              <path d="M330 180 L352 176 L358 206 L338 212 Z" fill="#3fa665"/>
+              <path d="M222 300 L246 296 L254 322 L232 332 Z" fill="#3fa665"/>
+              <path d="M62 350 L84 344 L90 366 L70 374 Z" fill="#3fa665"/>
+              <path d="M286 44 L306 42 L310 62 L290 66 Z" fill="#3fa665"/>
+
+              <!-- мосты -->
+              <path d="M150 228 L176 240 M160 206 L196 220 M178 150 L212 156 M190 70 L204 76" stroke="#fff" stroke-width="3"/>
+
+              <g class="paper-map__water">
+                <text x="56" y="120" transform="rotate(-78 56 120)">Гудзон</text>
+                <text x="118" y="300">Верхняя бухта</text>
+              </g>
+
+              <g class="paper-map__labels">
+                <text x="276" y="80">БРОНКС</text>
+                <text x="150" y="176" transform="rotate(-76 150 176)">МАНХЭТТЕН</text>
+                <text x="296" y="232">КУИНС</text>
+                <text x="246" y="358">БРУКЛИН</text>
+                <text x="84" y="394">СТАТЕН-АЙЛЕНД</text>
+              </g>
+
+              <!-- Красная нить: её точки меняет JavaScript -->
+              <polyline class="paper-map__thread" id="threadLine" points=""/>
+              <g id="mapPins"></g>
+            </g>
+
+            <!-- сгибы бумаги -->
+            <g pointer-events="none" stroke="#000" stroke-opacity=".12" stroke-width="1.5">
+              <path d="M133 0 V430 M266 0 V430 M0 215 H400"/>
+            </g>
+          </svg>
+
+          <p class="paper-map__legend"><span>паук сейчас: <b id="mapPlace">Куинс</b></span><button class="label-btn" id="patrolToggle" type="button" aria-pressed="false">остановить</button></p>
+        </div>
+
+        <div class="patrol__side">
+          <div class="tabs" id="districtTabs" role="group" aria-label="Районы"></div>
+
+          <article class="card" id="districtCard" aria-live="polite"></article>
+
+          <div class="pad">
+            <p class="pad__title">Журнал патруля <span id="patrolState">· идёт</span></p>
+            <ol class="pad__list hand" id="patrolLog"></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Дела: злодеи ===== -->
+    <section class="board reveal" id="villains">
+      <h2 class="heading"><span class="tape">Папки с делами</span></h2>
+
+      <div class="clip-row">
+        <figure class="poster">
+          <span class="pin pin--tl" aria-hidden="true"></span>
+          <span class="pin pin--tr" aria-hidden="true"></span>
+          <img class="pic" src="images/poster.jpg" alt="Постер с Человеком-пауком на фоне города">
+        </figure>
+
+        <div class="clip-wrap">
+          <article class="clipping">
+            <p class="clipping__paper">Daily Bugle · вечерний выпуск</p>
+            <h3 class="clipping__title">Паук: угроза или сосед?</h3>
+            <p class="clipping__text">Редакция снова требует снимков. Фотограф Паркер приносит их раньше всех и&nbsp;отказывается объяснять, как оказался на&nbsp;крыше. Шесть дел из&nbsp;его архива лежат в&nbsp;папках ниже.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="folder">
+        <div class="folder__tabs" id="villainTabs" role="group" aria-label="Папки"></div>
+        <div class="folder__body">
+          <article class="sheet" id="villainCard" aria-live="polite"></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Мои разработки: снаряжение ===== -->
+    <section class="board reveal" id="gear">
+      <h2 class="heading"><span class="tape">Мои разработки</span></h2>
+
+      <div class="blueprints">
+        <article class="blueprint" style="--r: -1.2deg">
+          <p class="blueprint__num">лист 1 / 2</p>
+          <h3>Паучья паутина</h3>
+          <p class="blueprint__spec">C₆H₁₂O₆ + (C₃H₆O)ₙ · Zn · SiO₂</p>
+          <ul>
+            <li>прочность на разрыв: 120 МПа</li>
+            <li>растяжимость до 400%</li>
+            <li>растворяется через 2 часа</li>
+            <li>картриджи на запястье, 10 зарядов</li>
+          </ul>
+        </article>
+        <article class="blueprint" style="--r: 1deg">
+          <p class="blueprint__num">лист 2 / 2</p>
+          <h3>Режимы линз</h3>
+          <p class="blueprint__spec">AI-ассистент + HUD</p>
+          <ul>
+            <li>прицел: захват целей</li>
+            <li>тепловизор: ночное зрение</li>
+            <li>сканер окружения</li>
+            <li>затемнение: защита от вспышек</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Контакты: блокнот ===== -->
+    <section class="board reveal" id="signal">
+      <h2 class="heading"><span class="tape">Оставить сообщение</span></h2>
+
+      <div class="signal">
+        <form class="memo" id="signalForm" action="#" method="post">
+          <p class="memo__head">Пока вас не было</p>
+          <div class="field">
+            <label for="userName">От кого</label>
+            <input type="text" id="userName" name="username" autocomplete="name" required minlength="2">
+            <p class="field__error" id="userNameError"></p>
+          </div>
+          <div class="field">
+            <label for="userEmail">Email для ответа</label>
+            <input type="email" id="userEmail" name="email" autocomplete="email" required>
+            <p class="field__error" id="userEmailError"></p>
+          </div>
+          <div class="field">
+            <label for="userDistrict">Район</label>
+            <select id="userDistrict" name="district" required></select>
+            <p class="field__error" id="userDistrictError"></p>
+          </div>
+          <div class="field">
+            <label for="userMessage">Что случилось</label>
+            <textarea id="userMessage" name="message" rows="3" required minlength="10"></textarea>
+            <p class="field__error" id="userMessageError"></p>
+          </div>
+          <button class="stamp-btn" type="submit">Приколоть на доску</button>
+          <p class="memo__status" id="formStatus" role="status"></p>
+        </form>
+
+        <div class="signal__side">
+          <ul class="contacts">
+            <li><span class="label">почта</span><a href="mailto:peter.parker@example.com">peter.parker@example.com</a></li>
+            <li><span class="label">база</span>Куинс, Нью-Йорк</li>
+            <li><span class="label">часы</span>24/7, кроме экзаменов</li>
+          </ul>
+          <p class="label">записки на доске: <b id="counter">0</b></p>
+          <ul class="notes" id="notesList"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="board">
+      <img class="pic footer__hang" src="images/hanging-2.png" alt="">
+      <p class="hand hand--big footer__motto">Ваш дружелюбный сосед.</p>
+      <div class="footer__notes">
+        <p><strong>AI-помощник:</strong> Claude (Anthropic) — прототип вёрстки и&nbsp;скриптов, ревью кода. Подробности в&nbsp;README.md.</p>
+        <p><strong>Время выполнения:</strong> 1&nbsp;час.</p>
+        <p><strong>Функционал на JavaScript:</strong> интерактивная карта районов с&nbsp;красной нитью патруля и&nbsp;журналом, отметки-навыки на&nbsp;рисунке в&nbsp;тетради, папки с&nbsp;делами, блокнот с&nbsp;проверкой формы и&nbsp;записками в&nbsp;localStorage, выключатель света, мобильное меню, паук на&nbsp;нити как индикатор прокрутки.</p>
+        <p>Учебная работа по курсу «Web-дизайн». Персонажи вымышленные и&nbsp;принадлежат Marvel; изображения Человека-паука принадлежат правообладателям и&nbsp;авторам, использованы в&nbsp;учебных целях, источники в&nbsp;README.md.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="dark" aria-hidden="true"></div>
+</body>
+</html>
