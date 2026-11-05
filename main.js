@@ -1,11 +1,6 @@
-// Скрипт подключён с defer: HTML уже разобран, элементы доступны.
-
 const root = document.documentElement;
 
-// Класс js сообщает стилям, что скрипт загрузился
 root.classList.add("js");
-
-/* ===== Данные ===== */
 
 const districts = [
   {
@@ -92,8 +87,6 @@ const villains = [
   { name: "Мистерио", weakness: "Слабость: иллюзии", text: "Мастер спецэффектов и гипноза. Реальность под вопросом.", threat: 3, district: "staten" }
 ];
 
-// Маленький помощник: создаёт элемент с классом и текстом.
-// Текст всегда вставляется через textContent, а не innerHTML.
 function createElement(tag, className, text = "") {
   const element = document.createElement(tag);
   element.className = className;
@@ -105,9 +98,6 @@ function getDistrict(id) {
   return districts.find((district) => district.id === id);
 }
 
-/* ===== 0. Картинки ===== */
-
-// Если файла нет в папке images, убираем картинку, чтобы не было «битой» иконки
 function handleMissingPicture(picture) {
   const frame = picture.closest(".comic-strip, .poster");
 
@@ -119,7 +109,6 @@ function handleMissingPicture(picture) {
 }
 
 for (const picture of document.querySelectorAll(".pic")) {
-  // Картинка могла не загрузиться ещё до запуска скрипта
   if (picture.complete && picture.naturalWidth === 0) {
     handleMissingPicture(picture);
   } else {
@@ -127,7 +116,6 @@ for (const picture of document.querySelectorAll(".pic")) {
   }
 }
 
-// Фигура на нити появляется, только когда её файл загрузился
 const threadFigure = document.querySelector(".thread__figure");
 
 function markThreadFigure() {
@@ -139,8 +127,6 @@ if (threadFigure && threadFigure.complete && threadFigure.naturalWidth > 0) {
 } else if (threadFigure) {
   threadFigure.addEventListener("load", markThreadFigure);
 }
-
-/* ===== 1. Выключатель света ===== */
 
 const THEME_KEY = "board-light";
 const themeToggle = document.querySelector("#themeToggle");
@@ -157,7 +143,6 @@ function writeStorage(key, value) {
   try {
     localStorage.setItem(key, value);
   } catch {
-    // Хранилище недоступно: страница работает, просто ничего не запомнит
   }
 }
 
@@ -175,8 +160,6 @@ themeToggle.addEventListener("click", () => {
   setLight(isOn);
   writeStorage(THEME_KEY, isOn ? "on" : "off");
 });
-
-/* ===== 2. Мобильное меню ===== */
 
 const menuToggle = document.querySelector("#menuToggle");
 const nav = document.querySelector("#nav");
@@ -200,8 +183,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-/* ===== 3. Паук на нити: индикатор прокрутки ===== */
-
 function updateThread() {
   const scrollable = root.scrollHeight - window.innerHeight;
   const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
@@ -212,8 +193,6 @@ function updateThread() {
 window.addEventListener("scroll", updateThread, { passive: true });
 window.addEventListener("resize", updateThread);
 updateThread();
-
-/* ===== 4. Досье: точки-навыки ===== */
 
 const hotspots = document.querySelectorAll(".mark");
 const skillTitle = document.querySelector("#skillTitle");
@@ -239,8 +218,6 @@ for (const hotspot of hotspots) {
 }
 
 showSkill("sense");
-
-/* ===== 5. Карта районов ===== */
 
 const districtPaths = document.querySelectorAll(".district");
 const districtTabs = document.querySelector("#districtTabs");
@@ -287,13 +264,11 @@ function selectDistrict(id) {
   districtSelect.value = id;
 }
 
-// Пользователь выбрал район сам: показываем карточку и отправляем туда паука
 function chooseDistrict(id) {
   selectDistrict(id);
   sendPatrolTo(getDistrict(id));
 }
 
-// Кнопки районов и пункты списка в форме строятся из одного массива
 for (const district of districts) {
   const tab = createElement("button", "tab", district.name);
   tab.type = "button";
@@ -307,7 +282,6 @@ for (const district of districts) {
   districtSelect.append(option);
 }
 
-// Районы на схеме работают как кнопки: мышью, касанием и с клавиатуры
 for (const path of districtPaths) {
   const district = getDistrict(path.dataset.district);
 
@@ -326,15 +300,12 @@ for (const path of districtPaths) {
 
 selectDistrict("queens");
 
-// Кнопки «на карте» в разделе образования ведут к нужному району
 for (const button of document.querySelectorAll("[data-goto]")) {
   button.addEventListener("click", () => {
     chooseDistrict(button.dataset.goto);
     document.querySelector("#map").scrollIntoView();
   });
 }
-
-/* ===== 6. Патруль: красная нить и журнал ===== */
 
 const PATROL_DELAY = 6000;
 const LOG_LIMIT = 5;
@@ -353,7 +324,6 @@ let currentPlace = getDistrict("queens");
 let route = [];
 let patrolTimerId = null;
 
-// В каждый район воткнута кнопка. SVG-элементы создаются через createElementNS
 for (const district of districts) {
   const pin = document.createElementNS(SVG_NS, "g");
   pin.setAttribute("class", "map-pin");
@@ -386,7 +356,6 @@ function addLogLine(text, isSignal = false) {
 
   patrolLog.prepend(line);
 
-  // В журнале остаются только последние записи
   while (patrolLog.children.length > LOG_LIMIT) {
     patrolLog.lastElementChild.remove();
   }
@@ -397,7 +366,6 @@ function moveTo(district) {
   heroPlace.textContent = district.name;
   mapPlace.textContent = district.name;
 
-  // Нить тянется через последние посещённые районы
   route.push(district);
   route = route.slice(-THREAD_LIMIT);
   threadLine.setAttribute("points", route.map((place) => `${place.x},${place.y}`).join(" "));
@@ -408,7 +376,6 @@ function moveTo(district) {
 }
 
 function patrolStep() {
-  // Следующий район всегда отличается от текущего
   const others = districts.filter((district) => district.id !== currentPlace.id);
   const next = pickRandom(others);
 
@@ -416,8 +383,6 @@ function patrolStep() {
   addLogLine(`${next.name}: ${pickRandom(next.events)}`);
 }
 
-// Вызов с карты: паук перемещается в выбранный район,
-// а таймер запускается заново, чтобы он не уехал оттуда сразу же
 function sendPatrolTo(district) {
   if (district.id !== currentPlace.id) {
     moveTo(district);
@@ -458,8 +423,6 @@ patrolToggle.addEventListener("click", () => {
 moveTo(currentPlace);
 addLogLine(`${currentPlace.name}: вышел на патруль`);
 startPatrol();
-
-/* ===== 7. Папки с делами ===== */
 
 const villainTabs = document.querySelector("#villainTabs");
 const villainCard = document.querySelector("#villainCard");
@@ -516,15 +479,12 @@ villains.forEach((villain, index) => {
 
 showVillain(0);
 
-/* ===== 8. Записки на доске ===== */
-
 const NOTES_KEY = "board-notes";
 const NOTES_LIMIT = 6;
 const counter = document.querySelector("#counter");
 const notesList = document.querySelector("#notesList");
 
 function readNotes() {
-  // Сохранённый JSON может быть повреждён, поэтому разбор в try...catch
   try {
     const saved = JSON.parse(readStorage(NOTES_KEY));
     return Array.isArray(saved) ? saved : [];
@@ -538,7 +498,6 @@ function renderNotes(notes) {
     const district = getDistrict(note.district);
     const item = createElement("li", "sticky");
 
-    // Записки висят немного криво, каждая под своим углом
     item.style.setProperty("--r", `${(index % 2 === 0 ? -1 : 1) * (2 + index)}deg`);
     item.append(
       createElement("b", "", district ? district.name : "Город"),
@@ -552,8 +511,6 @@ function renderNotes(notes) {
 }
 
 renderNotes(readNotes());
-
-/* ===== 9. Появление блоков при прокрутке ===== */
 
 const revealBlocks = document.querySelectorAll(".reveal");
 
@@ -579,34 +536,12 @@ if ("IntersectionObserver" in window) {
   }
 }
 
-/* ===== 10. Форма сигнала + EmailJS ===== */
-
-// Ключи из личного кабинета emailjs.com — ЗАМЕНИТЬ на свои:
-// Public Key: Account → General → Public Key
-// Service ID: Email Services → нужный сервис
-// Template ID: Email Templates → нужный шаблон
-const EMAILJS_PUBLIC_KEY = "FWoDh3e0CWO8SMuGI";
-const EMAILJS_SERVICE_ID = "service_bld9sm6";
-const EMAILJS_TEMPLATE_ID = "template_m7g44wl";
-
-const emailjsReady =
-  typeof emailjs !== "undefined" &&
-  ![EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID].some((key) => key.startsWith("YOUR_"));
-
-if (emailjsReady) {
-  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-}
-
 const form = document.querySelector("#signalForm");
 const formStatus = document.querySelector("#formStatus");
-const submitBtn = document.querySelector("#submitBtn");
 const emailRegex = /^\S+@\S+\.\S+$/;
 
-// Свои сообщения вместо подсказок браузера.
-// Без скрипта форму проверяют атрибуты required и minlength.
 form.noValidate = true;
 
-// Чистая функция: получает значения и возвращает объект с ошибками
 function validateSignal(values) {
   const errors = {};
 
@@ -636,7 +571,7 @@ function showFieldError(field, message = "") {
   errorElement.textContent = message;
 }
 
-form.addEventListener("submit", async (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
@@ -661,47 +596,20 @@ form.addEventListener("submit", async (event) => {
 
   const district = getDistrict(values.district);
 
-  // Скрытые поля: в письме будет название района и время, а не id
-  form.elements.district_name.value = district.name;
-  form.elements.time.value = new Date().toLocaleString("ru-RU");
-
-  // Отправка письма. sendForm берёт значения полей по атрибуту name,
-  // и в шаблоне они подставляются как {{username}}, {{email}} и т. д.
-  if (emailjsReady) {
-    submitBtn.disabled = true;
-    formStatus.textContent = "Отправляю записку…";
-
-    try {
-      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form);
-    } catch (error) {
-      console.error("EmailJS:", error);
-      formStatus.textContent = "Не получилось отправить. Проверьте интернет и попробуйте ещё раз.";
-      submitBtn.disabled = false;
-      return;
-    }
-
-    submitBtn.disabled = false;
-  }
-
-  // В браузере сохраняем только имя и район: почту и текст не храним
   const notes = readNotes();
   notes.push({ name: values.username, district: district.id });
   writeStorage(NOTES_KEY, JSON.stringify(notes));
   renderNotes(notes);
 
-  // Нить на карте тянется к месту сигнала
   selectDistrict(district.id);
   moveTo(district);
   addLogLine(`${district.name}: записка от ${values.username}, выезжаю`, true);
 
-  formStatus.textContent = emailjsReady
-    ? `Записка отправлена, ${values.username}! Район: ${district.name}. Паук уже в курсе.`
-    : `Записка приколота, ${values.username}. Ключи EmailJS ещё не вставлены в main.js, поэтому письмо не ушло.`;
+  formStatus.textContent = `Записка приколота, ${values.username}. Район: ${district.name}. Отправляю письмо…`;
   form.reset();
   districtSelect.value = district.id;
 });
 
-// Ошибка исчезает, как только поле начали исправлять
 form.addEventListener("input", (event) => {
   showFieldError(event.target);
 });
