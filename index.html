@@ -9,9 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Dela+Gothic+One&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <!-- 1. Подключаем библиотеку EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <!-- 2. Входим в свой аккаунт EmailJS по Public Key -->
   <script>
     emailjs.init({ publicKey: "FWoDh3e0CWO8SMuGI" });
   </script>
@@ -20,7 +18,6 @@
 <body>
   <a class="skip-link" href="#main">Перейти к содержимому</a>
 
-  <!-- Фильтр «дрожащая рука»: делает линии рисунка неровными, как от карандаша -->
   <svg class="defs" aria-hidden="true">
     <filter id="wobble">
       <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/>
@@ -28,7 +25,6 @@
     </filter>
   </svg>
 
-  <!-- Паук на нити: опускается по мере прокрутки -->
   <div class="thread" aria-hidden="true">
     <svg class="thread__spider" viewBox="0 0 40 40">
       <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -61,7 +57,6 @@
   </header>
 
   <main id="main" class="desk">
-    <!-- ===== Первый экран: обложка комикса, пропуск, снимки ===== -->
     <section class="hero board" id="top">
       <div class="cover">
         <p class="cover__issue">Выпуск №1 · Куинс, Нью-Йорк</p>
@@ -118,7 +113,6 @@
       <p class="label hero__now">Паук сейчас патрулирует: <b id="heroPlace">Куинс</b></p>
     </section>
 
-    <!-- ===== Вырезка из комикса ===== -->
     <div class="board">
       <figure class="comic-strip">
         <img class="pic" src="images/comic-eyes.jpg" alt="Кадр из комикса: Человек-паук выглядывает из-за края">
@@ -126,7 +120,6 @@
       </figure>
     </div>
 
-    <!-- ===== Тетрадь: обо мне и навыки ===== -->
     <section class="board reveal" id="about">
       <h2 class="heading"><span class="tape">Обо мне</span></h2>
 
@@ -181,7 +174,6 @@
       </div>
     </section>
 
-    <!-- ===== Образование ===== -->
     <section class="board reveal" id="education">
       <h2 class="heading"><span class="tape">Образование</span></h2>
 
@@ -208,7 +200,6 @@
       </div>
     </section>
 
-    <!-- ===== Опыт работы ===== -->
     <section class="board reveal" id="work">
       <h2 class="heading"><span class="tape">Опыт работы</span></h2>
 
@@ -240,7 +231,6 @@
       </ol>
     </section>
 
-    <!-- ===== Карта: опыт, образование, проекты по районам ===== -->
     <section class="board reveal" id="map">
       <h2 class="heading"><span class="tape">Карта патруля</span></h2>
 
@@ -273,14 +263,12 @@
             <g pointer-events="none">
               <path d="M196 16 L262 12 L334 26 L356 72 L350 110 L300 124 L252 130 L214 108 L198 92 Z M166 38 L192 44 L188 96 L178 152 L164 204 L150 240 L130 250 L120 232 L130 184 L146 138 L156 84 Z M214 150 L262 144 L318 132 L362 136 L384 196 L388 252 L352 286 L330 300 L286 284 L256 270 L240 236 L232 212 L206 200 Z M168 242 L204 216 L232 226 L244 262 L252 282 L300 300 L326 312 L312 356 L290 386 L250 398 L214 396 L184 364 L164 330 Z M38 332 L72 312 L106 302 L126 326 L132 348 L112 388 L94 410 L56 412 L34 398 Z" fill="url(#streets)"/>
 
-              <!-- парки -->
               <path d="M163 96 L174 98 L166 150 L155 148 Z" fill="#3fa665"/>
               <path d="M330 180 L352 176 L358 206 L338 212 Z" fill="#3fa665"/>
               <path d="M222 300 L246 296 L254 322 L232 332 Z" fill="#3fa665"/>
               <path d="M62 350 L84 344 L90 366 L70 374 Z" fill="#3fa665"/>
               <path d="M286 44 L306 42 L310 62 L290 66 Z" fill="#3fa665"/>
 
-              <!-- мосты -->
               <path d="M150 228 L176 240 M160 206 L196 220 M178 150 L212 156 M190 70 L204 76" stroke="#fff" stroke-width="3"/>
 
               <g class="paper-map__water">
@@ -296,12 +284,10 @@
                 <text x="84" y="394">СТАТЕН-АЙЛЕНД</text>
               </g>
 
-              <!-- Красная нить: её точки меняет JavaScript -->
               <polyline class="paper-map__thread" id="threadLine" points=""/>
               <g id="mapPins"></g>
             </g>
 
-            <!-- сгибы бумаги -->
             <g pointer-events="none" stroke="#000" stroke-opacity=".12" stroke-width="1.5">
               <path d="M133 0 V430 M266 0 V430 M0 215 H400"/>
             </g>
@@ -323,7 +309,6 @@
       </div>
     </section>
 
-    <!-- ===== Дела: злодеи ===== -->
     <section class="board reveal" id="villains">
       <h2 class="heading"><span class="tape">Папки с делами</span></h2>
 
@@ -351,7 +336,6 @@
       </div>
     </section>
 
-    <!-- ===== Мои разработки: снаряжение ===== -->
     <section class="board reveal" id="gear">
       <h2 class="heading"><span class="tape">Мои разработки</span></h2>
 
@@ -381,7 +365,6 @@
       </div>
     </section>
 
-    <!-- ===== Контакты: блокнот ===== -->
     <section class="board reveal" id="signal">
       <h2 class="heading"><span class="tape">Оставить сообщение</span></h2>
 
@@ -408,7 +391,6 @@
             <textarea id="userMessage" name="message" rows="3" required minlength="10"></textarea>
             <p class="field__error" id="userMessageError"></p>
           </div>
-          <!-- Скрытые поля: скрипт заполняет их перед отправкой, они попадают в письмо -->
           <input type="hidden" id="districtName" name="district_name">
           <input type="hidden" id="sentAt" name="time">
           <button class="stamp-btn" type="submit">Приколоть на доску</button>
@@ -443,7 +425,6 @@
 
   <div class="dark" aria-hidden="true"></div>
 
-  <!-- 3. Отправка формы на почту через EmailJS -->
   <script>
     const myForm = document.querySelector("#signalForm");
 
