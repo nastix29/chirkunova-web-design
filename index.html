@@ -9,8 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Dela+Gothic+One&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <!-- EmailJS: отправка писем прямо из браузера, без своего сервера -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+  <!-- 1. Подключаем библиотеку EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- 2. Входим в свой аккаунт EmailJS по Public Key -->
+  <script>
+    emailjs.init({ publicKey: "FWoDh3e0CWO8SMuGI" });
+  </script>
   <script src="main.js" defer></script>
 </head>
 <body>
@@ -407,7 +411,7 @@
           <!-- Скрытые поля: скрипт заполняет их перед отправкой, они попадают в письмо -->
           <input type="hidden" id="districtName" name="district_name">
           <input type="hidden" id="sentAt" name="time">
-          <button class="stamp-btn" type="submit" id="submitBtn">Приколоть на доску</button>
+          <button class="stamp-btn" type="submit">Приколоть на доску</button>
           <p class="memo__status" id="formStatus" role="status"></p>
         </form>
 
@@ -438,5 +442,22 @@
   </footer>
 
   <div class="dark" aria-hidden="true"></div>
+
+  <!-- 3. Отправка формы на почту через EmailJS -->
+  <script>
+    const myForm = document.querySelector("#signalForm");
+
+    myForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!myForm.checkValidity()) return;
+
+      myForm.district_name.value = myForm.district.selectedOptions[0].text;
+      myForm.time.value = new Date().toLocaleString("ru-RU");
+
+      emailjs.sendForm("service_bld9sm6", "template_m7g44wl", myForm)
+        .then(() => document.querySelector("#formStatus").textContent = "Письмо отправлено!")
+        .catch(() => document.querySelector("#formStatus").textContent = "Ошибка, письмо не отправлено");
+    });
+  </script>
 </body>
 </html>
